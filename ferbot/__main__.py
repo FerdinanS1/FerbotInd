@@ -39,7 +39,7 @@ from ferbot import (
 )
 
 PM_START_TEXT = f"""
-Hallo! Perkenalkan nama saya *{dispatcher.bot.first_name}*.
+Hallo! Perkenalkan nama saya FerbotInd.
 
 SAYA SEDANG DALAM PEMBUATAN JIKA SUDAH TERSEDIA MAKA AKAN DI BERITAHUKAN.
 """
