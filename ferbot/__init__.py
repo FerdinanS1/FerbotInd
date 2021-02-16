@@ -113,7 +113,7 @@ else:
     spamwtc = spamwatch.Client(SPAMWATCH)
 
 # Everything Init with this
-updater = tg.Updater("TOKEN", workers=WORKERS)
+updater = tg.Updater(TOKEN, workers=WORKERS)
 dispatcher = updater.dispatcher
 
 # Declare user rank
