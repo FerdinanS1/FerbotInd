@@ -52,12 +52,61 @@ buttons = [[InlineKeyboardButton(text="🔗 Tinjau Perkembangan",
 
 @typing_action
 def start(update, context):
+    if update.effective_chat.type == "private":
+        args = context.args
+        if len(args) >= 1:
+            if args[0].lower() == "help":
+                user = update.effective_user
+                keyb = paginate_modules(0, HELPABLE, "help")
+
+                if (
+                    user.id in DEV_USERS
+                    or user.id in SUDO_USERS
+                    or user.id in SUPPORT_USERS
+                ):
+                    keyb += [
+                        [
+                            InlineKeyboardButton(
+                                text="Staff", callback_data="help_staff"
+                            )
+                        ]
+                    ]
+
+                send_help(
+                    update.effective_chat.id,
+                    HELP_STRINGS,
+                    InlineKeyboardMarkup(keyb),
+                )
+
+            elif args[0].lower().startswith("stngs_"):
+                match = re.match("stngs_(.*)", args[0].lower())
+                chat = dispatcher.bot.getChat(match.group(1))
+
+                if is_user_admin(chat, update.effective_user.id):
+                    send_settings(
+                        match.group(1), update.effective_user.id, False
+                    )
+                else:
+                    send_settings(
+                        match.group(1), update.effective_user.id, True
+                    )
+
+            elif args[0][1:].isdigit() and "rules" in IMPORTED:
+                IMPORTED["rules"].send_rules(update, args[0], from_pm=True)
+
         else:
             update.effective_message.reply_photo(
-                "https://i.ibb.co/nBwSNvN/Logo-header-ferbotind.jpg",
+                "https://i.ibb.co/nBwSNvN/Logo-header-ferboten.jpg",
                 PM_START_TEXT,
                 reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode=ParseMode.MARKDOWN,
+                timeout=60,
+            )
+    else:
+        update.effective_message.reply_text(
+            "Hello everyone, I'm still alive here:)"
+        )
+
 
 
 if __name__ == "__main__":
