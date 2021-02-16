@@ -126,11 +126,6 @@ STAFF_USERS = list(STAFF)
 
 WHITELIST_USERS = list(WHITELIST_USERS)
 
-# Load at end to ensure all prev variables have been set
-# pylint: disable=C0413
-from ferbot.modules.helper_funcs.handlers import (
-    CustomCommandHandler,
-)
 
 if CUSTOM_CMD and len(CUSTOM_CMD) >= 1:
     tg.CommandHandler = CustomCommandHandler
